@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PINKMAN</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --bg:#eef5ff;
+    --card:#ffffff;
+    --text:#111111;
+    --muted:#666666;
+    --border:#d5d5d5;
+    --accent:#1877f2;
+    --topbar:#ffffff;
+    --input:#f1f3f6;
+    --shadow:rgba(0,0,0,.08);
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    transition:.3s;
+}
+
+/* ================= NAVIGATION ================= */
+
+.topbar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:64px;
+    background:var(--topbar);
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    z-index:1000;
+    box-shadow:0 2px 10px var(--shadow);
+}
+
+.nav-btn{
+    border:none;
+    background:transparent;
+    color:var(--text);
+    font-size:12px;
+    font-weight:bold;
+    padding:11px 9px;
+    cursor:pointer;
+    border-radius:8px;
+    transition:.25s;
+}
+
+.nav-btn:hover{
+    background:var(--input);
+}
+
+.nav-btn.active{
+    background:var(--accent);
+    color:#fff;
+}
+
+/* ================= PAGE ================= */
+
+.page{
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:88px 15px 40px;
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-title{
+    text-align:center;
+    font-size:27px;
+    font-weight:900;
+    margin-bottom:22px;
+}
+
+.subtitle{
+    text-align:center;
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+/* ================= THEME ================= */
+
+.theme-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.theme-card{
+    min-height:90px;
+    padding:10px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--card);
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 4px 12px var(--shadow);
+}
+
+.theme-card:hover{
+    transform:translateY(-3px);
+}
+
+.theme-preview{
+    width:100%;
+    height:45px;
+    border-radius:8px;
+    margin-bottom:8px;
+    border:1px solid var(--border);
+}
+
+.theme-name{
+    font-size:11px;
+    font-weight:800;
+    text-align:center;
+}
+
+/* ================= PROFILE SKELETON ================= */
+
+/* New CSS profile logo */
+.profile-logo{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    position:relative;
+    background:var(--input);
+    border:2px solid var(--accent);
+    margin:0 auto 10px;
+    overflow:hidden;
+}
+
+.profile-logo::before{
+    content:"";
+    position:absolute;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:var(--accent);
+    top:9px;
+    left:17px;
+}
+
+.profile-logo::after{
+    content:"";
+    position:absolute;
+    width:34px;
+    height:19px;
+    border-radius:20px 20px 8px 8px;
+    background:var(--accent);
+    left:10px;
+    bottom:7px;
+}
+
+/* ================= STRANGER ================= */
+
+.search-box{
+    width:100%;
+    padding:13px 15px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--input);
+    color:var(--text);
+    outline:none;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.student-count{
+    text-align:center;
+    color:var(--muted);
+    font-size:12px;
+    margin-bottom:18px;
+}
+
+.profile-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.profile-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px 12px;
+    text-align:center;
+    box-shadow:0 5px 15px var(--shadow);
+    transition:.25s;
+}
+
+.profile-card:hover{
+    transform:translateY(-3px);
+}
+
+.profile-name{
+    font-size:14px;
+    font-weight:900;
+    margin-bottom:6px;
+}
+
+.student-tag{
+    display:inline-block;
+    font-size:9px;
+    font-weight:bold;
+    padding:4px 8px;
+    border-radius:20px;
+    background:var(--accent);
+    color:#fff;
+    margin-bottom:8px;
+}
+
+.profile-address{
+    color:var(--muted);
+    font-size:11px;
+    min-height:16px;
+    margin-bottom:13px;
+}
+
+.profile-btn{
+    border:none;
+    background:var(--accent);
+    color:#fff;
+    padding:9px 13px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.profile-btn:hover{
+    transform:scale(1.04);
+}
+
+.see-more{
+    display:block;
+    margin:20px auto 0;
+    border:1px solid var(--accent);
+    background:transparent;
+    color:var(--accent);
+    padding:10px 20px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ================= PINKMAN ================= */
+
+.post-box{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:18px;
+}
+
+.post-box textarea{
+    width:100%;
+    min-height:90px;
+    resize:none;
+    border:1px solid var(--border);
+    background:var(--input);
+    color:var(--text);
+    border-radius:10px;
+    padding:12px;
+    outline:none;
+}
+
+.post-input{
+    width:100%;
+    padding:11px;
+    margin-top:8px;
+    border:1px solid var(--border);
+    background:var(--input);
+    color:var(--text);
+    border-radius:8px;
+    outline:none;
+}
+
+.post-button{
+    margin-top:10px;
+    background:var(--accent);
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.post{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:14px;
+}
+
+.post-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:12px;
+}
+
+.mini-logo{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--input);
+    border:2px solid var(--accent);
+    position:relative;
+}
+
+.mini-logo::before{
+    content:"";
+    position:absolute;
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    background:var(--accent);
+    top:5px;
+    left:11px;
+}
+
+.mini-logo::after{
+    content:"";
+    position:absolute;
+    width:22px;
+    height:12px;
+    border-radius:15px 15px 5px 5px;
+    background:var(--accent);
+    bottom:5px;
+    left:6px;
+}
+
+.post-author{
+    font-weight:bold;
+    font-size:13px;
+}
+
+.post-time{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.post-text{
+    line-height:1.6;
+    font-size:14px;
+    margin-bottom:14px;
+}
+
+.post-actions{
+    display:flex;
+    gap:7px;
+}
+
+.action-btn{
+    flex:1;
+    padding:8px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text);
+    border-radius:7px;
+    cursor:pointer;
+    font-size:11px;
+}
+
+/* ================= NEWS ================= */
+
+.news-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.news-card{
+    min-height:100px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-weight:900;
+    font-size:14px;
+    cursor:pointer;
+    transition:.35s;
+    box-shadow:0 5px 15px var(--shadow);
+}
+
+.news-card:hover{
+    transform:translateY(-5px) scale(1.02);
+}
+
+/* ================= COMMUNICATION ================= */
+
+.communication-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.communication-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px 8px;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
+    box-shadow:0 5px 15px var(--shadow);
+}
+
+.communication-card:hover{
+    transform:translateY(-4px);
+}
+
+.communication-name{
+    font-size:11px;
+    font-weight:900;
+}
+
+/* ================= COMMUNICATION PROFILE VIEW ================= */
+
+.communication-overlay{
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+    z-index:2000;
+    display:none;
+    overflow-y:auto;
+}
+
+.communication-overlay.active{
+    display:block;
+}
+
+.communication-content{
+    width:100%;
+    max-width:650px;
+    margin:auto;
+    min-height:100vh;
+    padding:80px 15px 25px;
+}
+
+.back-btn{
+    border:none;
+    background:var(--accent);
+    color:#fff;
+    padding:10px 18px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+.communication-profile{
+    text-align:center;
+    padding:20px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.communication-profile h2{
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+.communication-profile p{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.message-history{
+    min-height:300px;
+    max-height:430px;
+    overflow-y:auto;
+    padding:12px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+    margin-bottom:12px;
+}
+
+.message{
+    max-width:80%;
+    padding:9px 12px;
+    border-radius:12px;
+    background:var(--input);
+    margin-bottom:9px;
+    font-size:13px;
+}
+
+.message-time{
+    display:block;
+    font-size:8px;
+    color:var(--muted);
+    margin-top:4px;
+}
+
+.message-composer{
+    display:flex;
+    gap:7px;
+}
+
+.message-composer input{
+    flex:1;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:9px;
+    background:var(--input);
+    color:var(--text);
+    outline:none;
+}
+
+.message-composer button{
+    border:none;
+    background:var(--accent);
+    color:#fff;
+    border-radius:9px;
+    padding:0 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ================= BLACK THEME ================= */
+
+body.black-theme{
+    --bg:#000000;
+    --card:#090909;
+    --text:#b56cff;
+    --muted:#a879c9;
+    --border:#33203f;
+    --accent:#b56cff;
+    --topbar:#050505;
+    --input:#111111;
+    --shadow:rgba(181,108,255,.12);
+}
+
+body.black-theme .nav-btn.active{
+    color:#000;
+    background:#b56cff;
+}
+
+body.black-theme .student-tag,
+body.black-theme .profile-btn,
+body.black-theme .back-btn,
+body.black-theme .post-button{
+    color:#000;
+}
+
+/* ================= BLACK GREEN ================= */
+
+body.black-green-theme{
+    --bg:#001b0c;
+    --card:#062611;
+    --text:#00e65c;
+    --muted:#75c994;
+    --border:#14552b;
+    --accent:#00e65c;
+    --topbar:#001207;
+    --input:#092e17;
+}
+
+/* ================= WHITE ================= */
+
+body.white-theme{
+    --bg:#f4f4f4;
+    --card:#ffffff;
+    --text:#111111;
+    --muted:#666;
+    --border:#ddd;
+    --accent:#222;
+    --topbar:#fff;
+    --input:#eee;
+}
+
+/* ================= WHITE PINK ================= */
+
+body.white-pink-theme{
+    --bg:#fff4f9;
+    --card:#ffffff;
+    --text:#222;
+    --muted:#777;
+    --border:#f0c9da;
+    --accent:#ff2f92;
+    --topbar:#fff;
+    --input:#fff0f6;
+}
+
+/* ================= WHITE BLUE ================= */
+
+body.white-blue-theme{
+    --bg:#eef5ff;
+    --card:#fff;
+    --text:#111;
+    --muted:#666;
+    --border:#d5d5d5;
+    --accent:#1877f2;
+    --topbar:#fff;
+    --input:#f1f3f6;
+}
+
+/* ================= EYE CARE ================= */
+
+body.eye-care-theme{
+    --bg:#f5efd9;
+    --card:#fffaf0;
+    --text:#493b22;
+    --muted:#806f4c;
+    --border:#d8caa4;
+    --accent:#8b6f32;
+    --topbar:#fff9e9;
+    --input:#eee5c8;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:600px){
+
+    .topbar{
+        gap:1px;
+    }
+
+    .nav-btn{
+        font-size:9px;
+        padding:10px 5px;
+    }
+
+    .theme-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .profile-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .communication-grid{
+        grid-template-columns:repeat(3,1fr);
+        gap:8px;
+    }
+
+    .communication-card{
+        padding:12px 5px;
+    }
+
+    .profile-logo{
+        width:52px;
+        height:52px;
+    }
+}
+
+@media(max-width:360px){
+
+    .nav-btn{
+        font-size:8px;
+        padding:9px 3px;
+    }
+
+    .page{
+        padding-left:10px;
+        padding-right:10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav class="topbar">
+
+    <button class="nav-btn active"
+            onclick="openPage('theme',this)">
+        THEME
+    </button>
+
+    <button class="nav-btn"
+            onclick="openPage('stranger',this)">
+        STRANGER
+    </button>
+
+    <button class="nav-btn"
+            onclick="openPage('pinkman',this)">
+        PINKMAN
+    </button>
+
+    <button class="nav-btn"
+            onclick="openPage('news',this)">
+        NEWS
+    </button>
+
+    <button class="nav-btn"
+            onclick="openPage('communicate',this)">
+        COMUNICATE
+    </button>
+
+</nav>
+
+
+<!-- ================= THEME ================= -->
+
+<section id="theme" class="page active">
+
+    <h1 class="page-title">THEME</h1>
+
+    <p class="subtitle">
+        Choose your interface theme
+    </p>
+
+    <div class="theme-grid">
+
+        <div class="theme-card" onclick="setTheme('black')">
+            <div class="theme-preview"
+                 style="background:#000;border-color:#b56cff;">
+            </div>
+            <div class="theme-name">BLACK</div>
+        </div>
+
+        <div class="theme-card" onclick="setTheme('black-green')">
+            <div class="theme-preview"
+                 style="background:#001b0c;border-color:#00e65c;">
+            </div>
+            <div class="theme-name">BLACK GREEN</div>
+        </div>
+
+        <div class="theme-card" onclick="setTheme('white')">
+            <div class="theme-preview"
+                 style="background:#fff;">
+            </div>
+            <div class="theme-name">WHITE</div>
+        </div>
+
+        <div class="theme-card" onclick="setTheme('white-pink')">
+            <div class="theme-preview"
+                 style="background:#fff4f9;border-color:#ff2f92;">
+            </div>
+            <div class="theme-name">WHITE PINK</div>
+        </div>
+
+        <div class="theme-card" onclick="setTheme('white-blue')">
+            <div class="theme-preview"
+                 style="background:#eef5ff;border-color:#1877f2;">
+            </div>
+            <div class="theme-name">WHITE BLUE</div>
+        </div>
+
+        <div class="theme-card" onclick="setTheme('eye-care')">
+            <div class="theme-preview"
+                 style="background:#f5efd9;border-color:#8b6f32;">
+            </div>
+            <div class="theme-name">EYE CARE</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STRANGER ================= -->
+
+<section id="stranger" class="page">
+
+    <h1 class="page-title">STRANGER</h1>
+
+    <input
+        id="strangerSearch"
+        class="search-box"
+        type="text"
+        placeholder="Search student..."
+        oninput="searchStrangers()"
+    >
+
+    <div id="strangerCount" class="student-count">
+        26 STUDENTS
+    </div>
+
+    <div id="strangerGrid" class="profile-grid"></div>
+
+    <button class="see-more" onclick="goToSeeMore()">
+        SEE MORE
+    </button>
+
+</section>
+
+
+<!-- ================= PINKMAN ================= -->
+
+<section id="pinkman" class="page">
+
+    <h1 class="page-title">PINKMAN</h1>
+
+    <div class="post-box">
+
+        <textarea
+            id="postText"
+            placeholder="What's happening?"
+        ></textarea>
+
+        <input
+            id="imageURL"
+            class="post-input"
+            type="text"
+            placeholder="Image URL (optional)"
+        >
+
+        <button
+            class="post-button"
+            onclick="createPost()">
+            POST
+        </button>
+
+    </div>
+
+    <div id="feed">
+
+        <div class="post">
+
+            <div class="post-header">
+
+                <div class="mini-logo"></div>
+
+                <div>
+                    <div class="post-author">
+                        PINKMAN
+                    </div>
+
+                    <div class="post-time">
+                        Welcome
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="post-text">
+                Welcome to PINKMAN.
+            </div>
+
+            <div class="post-actions">
+
+                <button class="action-btn"
+                        onclick="likePost(this)">
+                    ♡ LIKE
+                </button>
+
+                <button class="action-btn"
+                        onclick="commentPost(this)">
+                    COMMENT
+                </button>
+
+                <button class="action-btn"
+                        onclick="sharePost()">
+                    SHARE
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= NEWS ================= -->
+
+<section id="news" class="page">
+
+    <h1 class="page-title">NEWS</h1>
+
+    <div class="news-grid">
+
+        <div class="news-card"
+             onclick="openNewsLink('https://abir12k4.github.io/ab.apk/')">
+            AB-PINKMAN
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('TECH.html')">
+            TECH
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('POLITICS.html')">
+            POLITICS
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('PHILOPHOPY.html')">
+            PHILOPHOPY
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('MOBAIL.html')">
+            MOBAIL
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('LAPTOP.html')">
+            LAPTOP
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('GAME.html')">
+            GAME
+        </div>
+
+        <div class="news-card"
+             onclick="openNewsFile('LAWS.html')">
+            LAWS
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= COMMUNICATION ================= -->
+
+<section id="communicate" class="page">
+
+    <h1 class="page-title">
+        COMMUNICATION
+    </h1>
+
+    <input
+        id="communicationSearch"
+        class="search-box"
+        type="text"
+        placeholder="Search student..."
+        oninput="searchCommunication()"
+    >
+
+    <div
+        id="communicationGrid"
+        class="communication-grid">
+    </div>
+
+    <p
+        id="communicationNoResult"
+        style="display:none;text-align:center;color:var(--muted);margin-top:20px;">
+        No student found.
+    </p>
+
+</section>
+
+
+<!-- ================= COMMUNICATION PROFILE ================= -->
+
+<div
+    id="communicationOverlay"
+    class="communication-overlay">
+
+    <div class="communication-content">
+
+        <button
+            class="back-btn"
+            onclick="closeCommunication()">
+            ← BACK
+        </button>
+
+        <div class="communication-profile">
+
+            <!-- SAME CSS PROFILE LOGO -->
+            <div id="communicationLogo"
+                 class="profile-logo">
+            </div>
+
+            <h2 id="communicationName">
+                STUDENT
+            </h2>
+
+            <p id="communicationAddress">
+                STUDENT
+            </p>
+
+        </div>
+
+        <div
+            id="messageHistory"
+            class="message-history">
+        </div>
+
+        <div class="message-composer">
+
+            <input
+                id="messageInput"
+                type="text"
+                placeholder="Write a message..."
+                onkeydown="if(event.key==='Enter') sendMessage()"
+            >
+
+            <button onclick="sendMessage()">
+                SEND
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= STUDENT DATA ================= */
+
+const strangerData = [
+    "ABIR HASAN",
+    "ASIF SARDAR",
+    "SM JAKARIA",
+    "RIYAD HASAN",
+    "MAHMUDUL RIYAD",
+    "KRIPA DAS",
+    "TAMAL DEY",
+    "MARUF-KAMLAPUR",
+    "MARUF-PANJIA",
+    "ROBI DAS",
+    "RIFAT",
+    "HRIDOY",
+    "TAMIM",
+    "SHOVON ADIKARY",
+    "POLOK BABU",
+    "DIPTY BISWASH",
+    "SAMIHA JAHIN SREYA",
+    "OISHY",
+    "TANISHA SULTANA",
+    "SEJUTI",
+    "SHAMINA",
+    "POLLOBI",
+    "PUJA",
+    "AKHI",
+    "TABASSUM",
+    "KUSHI"
+];
+
+
+/* ================= PAGE NAVIGATION ================= */
+
+function openPage(pageId,button){
+
+    document.querySelectorAll(".page")
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
+
+    document.getElementById(pageId)
+        .classList.add("active");
+
+    document.querySelectorAll(".nav-btn")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* ================= THEME ================= */
+
+function setTheme(theme){
+
+    document.body.className = "";
+
+    document.body.classList.add(
+        theme + "-theme"
+    );
+
+    localStorage.setItem(
+        "pinkmanTheme",
+        theme
+    );
+}
+
+
+/* ================= PROFILE DATA ================= */
+
+function getPersonData(person){
+
+    const parts = person.split("-");
+
+    const name = parts[0];
+
+    const address =
+        parts.slice(1).join(" - ");
+
+    return {
+        name:name,
+        address:address
+    };
+}
+
+
+/* ================= ESCAPE HTML ================= */
+
+function escapeHTML(text){
+
+    const div=document.createElement("div");
+
+    div.textContent=text;
+
+    return div.innerHTML;
+}
+
+
+/* ================= PROFILE FILE ================= */
+
+function getProfileFileName(person){
+
+    const data=getPersonData(person);
+
+    const letters=data.name
+        .replace(/[^a-zA-Z]/g,"")
+        .toLowerCase();
+
+    return letters.substring(0,2)+".html";
+}
+
+
+/* ================= STRANGER ================= */
+
+function createStrangerProfiles(){
+
+    const grid=
+        document.getElementById("strangerGrid");
+
+    grid.innerHTML="";
+
+    strangerData.forEach(person=>{
+
+        const data=getPersonData(person);
+
+        const card=document.createElement("div");
+
+        card.className="profile-card";
+
+        card.dataset.search=
+            person.toLowerCase();
+
+        card.innerHTML=`
+
+            <div class="profile-logo"></div>
+
+            <div class="profile-name">
+                ${escapeHTML(data.name)}
+            </div>
+
+            <div class="student-tag">
+                STUDENT
+            </div>
+
+            <div class="profile-address">
+                ${escapeHTML(data.address)}
+            </div>
+
+            <button
+                class="profile-btn"
+                onclick="openProfile('${getProfileFileName(person)}')">
+                VIEW PROFILE
+            </button>
+
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+    updateStrangerCount();
+}
+
+
+function openProfile(fileName){
+
+    fetch(fileName,{
+        method:"HEAD"
+    })
+    .then(response=>{
+
+        if(response.ok){
+
+            window.location.href=fileName;
+
+        }else{
+
+            window.location.href="0.html";
+
+        }
+
+    })
+    .catch(()=>{
+
+        window.location.href="0.html";
+
+    });
+}
+
+
+function searchStrangers(){
+
+    const query=
+        document.getElementById("strangerSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    document
+        .querySelectorAll("#strangerGrid .profile-card")
+        .forEach(card=>{
+
+            card.style.display=
+                card.dataset.search.includes(query)
+                ? ""
+                : "none";
+
+        });
+
+    updateStrangerCount();
+}
+
+
+function updateStrangerCount(){
+
+    const visible=
+        [...document.querySelectorAll(
+            "#strangerGrid .profile-card"
+        )]
+        .filter(card=>card.style.display!=="none")
+        .length;
+
+    document.getElementById("strangerCount")
+        .textContent=
+        visible + " STUDENTS";
+}
+
+
+function goToSeeMore(){
+
+    window.location.href="seeoption.html";
+
+}
+
+
+/* ================= PINKMAN POSTS ================= */
+
+function createPost(){
+
+    const textarea=
+        document.getElementById("postText");
+
+    const text=
+        textarea.value.trim();
+
+    if(!text){
+        return;
+    }
+
+    const post=
+        document.createElement("div");
+
+    post.className="post";
+
+    post.innerHTML=`
+
+        <div class="post-header">
+
+            <div class="mini-logo"></div>
+
+            <div>
+
+                <div class="post-author">
+                    PINKMAN
+                </div>
+
+                <div class="post-time">
+                    JUST NOW
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="post-text">
+            ${escapeHTML(text)}
+        </div>
+
+        <div class="post-actions">
+
+            <button
+                class="action-btn"
+                onclick="likePost(this)">
+                ♡ LIKE
+            </button>
+
+            <button
+                class="action-btn"
+                onclick="commentPost(this)">
+                COMMENT
+            </button>
+
+            <button
+                class="action-btn"
+                onclick="sharePost()">
+                SHARE
+            </button>
+
+        </div>
+
+    `;
+
+    document
+        .getElementById("feed")
+        .prepend(post);
+
+    textarea.value="";
+}
+
+
+function likePost(button){
+
+    if(button.dataset.liked==="true"){
+
+        button.innerHTML="♡ LIKE";
+
+        button.dataset.liked="false";
+
+    }else{
+
+        button.innerHTML="♥ LIKED";
+
+        button.dataset.liked="true";
+
+    }
+}
+
+
+function commentPost(){
+
+    alert("Comment system ready.");
+}
+
+
+async function sharePost(){
+
+    const url=window.location.href;
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share({
+                title:"PINKMAN",
+                text:"Check out PINKMAN",
+                url:url
+            });
+
+        }catch(e){}
+
+    }else{
+
+        navigator.clipboard.writeText(url);
+
+        alert("Link copied!");
+
+    }
+}
+
+
+/* ================= NEWS ================= */
+
+function openNewsFile(fileName){
+
+    window.location.href=fileName;
+
+}
+
+
+function openNewsLink(url){
+
+    window.location.href=url;
+
+}
+
+
+/* ================= COMMUNICATION ================= */
+
+function createCommunicationProfiles(){
+
+    const grid=
+        document.getElementById(
+            "communicationGrid"
+        );
+
+    grid.innerHTML="";
+
+    strangerData.forEach((person,index)=>{
+
+        const data=
+            getPersonData(person);
+
+        const card=
+            document.createElement("div");
+
+        card.className=
+            "communication-card";
+
+        card.dataset.search=
+            person.toLowerCase();
+
+        card.innerHTML=`
+
+            <div class="profile-logo"></div>
+
+            <div class="communication-name">
+                ${escapeHTML(data.name)}
+            </div>
+
+        `;
+
+        card.onclick=()=>{
+            openCommunication(index);
+        };
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+let currentPersonIndex=null;
+
+
+function openCommunication(index){
+
+    currentPersonIndex=index;
+
+    const person=
+        strangerData[index];
+
+    const data=
+        getPersonData(person);
+
+    document.getElementById(
+        "communicationName"
+    ).textContent=data.name;
+
+    document.getElementById(
+        "communicationAddress"
+    ).textContent=
+        data.address || "STUDENT";
+
+    document.getElementById(
+        "communicationOverlay"
+    ).classList.add("active");
+
+    document.body.style.overflow="hidden";
+
+    loadMessages(person);
+
+    setTimeout(()=>{
+
+        document.getElementById(
+            "messageInput"
+        ).focus();
+
+    },100);
+
+}
+
+
+function closeCommunication(){
+
+    document.getElementById(
+        "communicationOverlay"
+    ).classList.remove("active");
+
+    document.body.style.overflow="";
+
+}
+
+
+function getMessageKey(person){
+
+    return "pinkman_messages_" + person;
+
+}
+
+
+function loadMessages(person){
+
+    const history=
+        document.getElementById(
+            "messageHistory"
+        );
+
+    history.innerHTML="";
+
+    const saved=
+        localStorage.getItem(
+            getMessageKey(person)
+        );
+
+    if(!saved){
+
+        history.innerHTML=`
+            <p style="
+                text-align:center;
+                color:var(--muted);
+                padding:30px 10px;
+                font-size:12px;">
+                No messages yet.
+            </p>
+        `;
+
+        return;
+    }
+
+    const messages=
+        JSON.parse(saved);
+
+    messages.forEach(message=>{
+
+        const div=
+            document.createElement("div");
+
+        div.className="message";
+
+        div.innerHTML=`
+
+            ${escapeHTML(message.text)}
+
+            <span class="message-time">
+                ${escapeHTML(message.time)}
+            </span>
+
+        `;
+
+        history.appendChild(div);
+
+    });
+
+    history.scrollTop=
+        history.scrollHeight;
+}
+
+
+function sendMessage(){
+
+    if(currentPersonIndex===null){
+        return;
+    }
+
+    const input=
+        document.getElementById(
+            "messageInput"
+        );
+
+    const text=
+        input.value.trim();
+
+    if(!text){
+        return;
+    }
+
+    const person=
+        strangerData[currentPersonIndex];
+
+    const key=
+        getMessageKey(person);
+
+    let messages=[];
+
+    const saved=
+        localStorage.getItem(key);
+
+    if(saved){
+
+        try{
+
+            messages=JSON.parse(saved);
+
+        }catch(e){
+
+            messages=[];
+
+        }
+
+    }
+
+    const now=
+        new Date();
+
+    const time=
+        now.toLocaleTimeString([],{
+            hour:"2-digit",
+            minute:"2-digit"
+        });
+
+    messages.push({
+        text:text,
+        time:time
+    });
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(messages)
+    );
+
+    input.value="";
+
+    loadMessages(person);
+
+}
+
+
+/* ================= COMMUNICATION SEARCH ================= */
+
+function searchCommunication(){
+
+    const query=
+        document.getElementById(
+            "communicationSearch"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+    let visible=0;
+
+    document
+        .querySelectorAll(
+            "#communicationGrid .communication-card"
+        )
+        .forEach(card=>{
+
+            if(
+                card.dataset.search
+                    .includes(query)
+            ){
+
+                card.style.display="";
+                visible++;
+
+            }else{
+
+                card.style.display="none";
+
+            }
+
+        });
+
+    document.getElementById(
+        "communicationNoResult"
+    ).style.display=
+        visible===0
+        ? "block"
+        : "none";
+}
+
+
+/* ================= START ================= */
+
+createStrangerProfiles();
+
+createCommunicationProfiles();
+
+const savedTheme=
+    localStorage.getItem(
+        "pinkmanTheme"
+    );
+
+if(savedTheme){
+
+    setTheme(savedTheme);
+
+}else{
+
+    setTheme("white-blue");
+
+}
+
+</script>
+
+</body>
+</html>
